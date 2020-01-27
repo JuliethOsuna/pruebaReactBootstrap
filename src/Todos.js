@@ -2,14 +2,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {ListGroup} from 'react-bootstrap';
 
-class Todos extends React.Component {
-  render(){
-    return(
-      <ListGroup>
-        <ListGroup.Item></ListGroup.Item>
-      </ListGroup>
-    )
+function Todos(props){
+
+  return(
+    <ListGroup>
+      {props.todos.map((element, index) => (
+        <ListGroup.Item key={index}>{element.task}</ListGroup.Item>
+      ))}
+    </ListGroup>
+  )
+
+}
+
+const mapStateToProps = (store) => {
+  return {
+    todos: store.todos
   }
 }
 
-export default Todos;
+const mapDispatchToProps = (dispatch) => {
+  return {};
+}
+
+const RatingsConnected = connect (
+  mapStateToProps,
+  mapDispatchToProps
+)(Todos)
+
+export default RatingsConnected;
