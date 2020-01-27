@@ -7,7 +7,9 @@ function Todos(props){
   return(
     <ListGroup>
       {props.todos.map((element, index) => (
-        <ListGroup.Item key={index}>{element.task}</ListGroup.Item>
+        <ListGroup.Item key={index} onClick={() => {
+          props.task(index)
+        }}>{element.task}</ListGroup.Item>
       ))}
     </ListGroup>
   )
@@ -15,18 +17,26 @@ function Todos(props){
 }
 
 const mapStateToProps = (store) => {
+  console.log(store)
   return {
     todos: store.todos
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    task: (index) => {
+      dispatch({
+        type: 'DELETE',
+        payload: index
+      });
+    }
+  };
 }
 
-const RatingsConnected = connect (
+const TodosConnected = connect (
   mapStateToProps,
   mapDispatchToProps
 )(Todos)
 
-export default RatingsConnected;
+export default TodosConnected;
