@@ -3,7 +3,7 @@ const initialState = {
 };
 
 function rootReducer(store = initialState, action) {
-  const storeCopy = JSON.parse(JSON.stringify(store))
+  let storeCopy = JSON.parse(JSON.stringify(store))
   switch(action.type){
     case 'ADD':
       if(storeCopy){
@@ -11,6 +11,11 @@ function rootReducer(store = initialState, action) {
         storeCopy.todos.push(action.payload)
       }
       return storeCopy
+    case 'DELETE':
+        const deleteTask = storeCopy.todos.filter((element,index) => {
+          return index !== action.payload;
+        })
+        storeCopy.todos = deleteTask;
     default:
       return storeCopy
   }
