@@ -1,33 +1,27 @@
 import React from 'react';
 import {Form, Button} from 'react-bootstrap';
-
+import { connect } from 'react-redux'
 
 class TodoListForm extends React.Component{
 
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: ''
+      task: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.passwordChange = this.passwordChange.bind(this);
   }
 
   handleChange(event) {
-    console.log(event)
-    this.setState({email: event.target.value});
-  }
-
-  passwordChange(event) {
-    this.setState({password: event.target.value});
+    this.setState({task: event.target.value});
   }
 
   handleSubmit(event) {
     console.log('A name was submitted: ', this.state);
     event.preventDefault();
+    this.props.todos(this.state);
   }
 
 
@@ -35,19 +29,11 @@ class TodoListForm extends React.Component{
     return(
       <Form onSubmit={this.handleSubmit}>
         <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" value={this.state.email} onChange={this.handleChange}/>
+          <Form.Label>To Do List</Form.Label>
+          <Form.Control type="text" placeholder="Enter tasks to do" value={this.state.task} onChange={this.handleChange}/>
           <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
+            Enter your pending tasks
           </Form.Text>
-        </Form.Group>
-
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={this.passwordChange}/>
-        </Form.Group>
-        <Form.Group controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
@@ -57,4 +43,24 @@ class TodoListForm extends React.Component{
   }
 }
 
-export default TodoListForm;
+const mapStateToProps = (store) => {
+  return {store};
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    todos: (tasks) => {
+      dispatch({
+        type: 'ADD',
+        payload: tasks
+      })
+    },
+  }
+}
+
+const TodoListFormConnected = connect (
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoListForm)
+
+export default TodoListFormConnected;

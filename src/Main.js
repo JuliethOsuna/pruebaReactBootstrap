@@ -1,6 +1,7 @@
 import React from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import TodoListForm from './TodoListForm';
+import Todos from './Todos';
 
 const Main = props => {
   return (
@@ -9,7 +10,9 @@ const Main = props => {
         <Col sm={8}>
           <TodoListForm />
         </Col>
-        <Col sm={4}>sm=4</Col>
+        <Col sm={4}>
+          <Todos />
+        </Col>
       </Row>
     </Container>
   )
